@@ -58,6 +58,13 @@ class PublicacionViewSet(viewsets.ModelViewSet):
     filterset_class = PublicacionFilter
     ordering_fields = ["fecha_publicacion"]
 
+    def get_queryset(self):
+        queryset = Publicacion.objects.all().order_by("-fecha_publicacion")
+        queryset = Publicacion.objects.all().order_by("-fecha_publicacion")
+        if usuario:
+            queryset = queryset.filter(usuario_id=usuario)
+        return queryset
+
     def get_serializer_class(self):
         if self.action in ["list", "retrieve"]:
             return PublicacionListSerializer
