@@ -60,7 +60,7 @@ class PublicacionViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = Publicacion.objects.all().order_by("-fecha_publicacion")
-        queryset = Publicacion.objects.all().order_by("-fecha_publicacion")
+        usuario = self.request.query_params.get('usuario', None)
         if usuario:
             queryset = queryset.filter(usuario_id=usuario)
         return queryset
