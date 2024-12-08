@@ -115,7 +115,6 @@ class EvidenciaSerializer(serializers.ModelSerializer):
         model = Evidencia
         fields = [
             "id",
-            "publicacion",
             "archivo",
             "fecha",
             "extension",
@@ -125,7 +124,9 @@ class EvidenciaSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         archivo = validated_data.pop("archivo")
         upload_data = cloudinary.uploader.upload(archivo)
-        validated_data["archivo"] = upload_data["url"]
+        url_completa = upload_data["url"]
+        ruta_relativa = url_completa.split("de06451wd/")[1]
+        validated_data["archivo"] = ruta_relativa
         return Evidencia.objects.create(**validated_data)
 
 
