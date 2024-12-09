@@ -123,7 +123,7 @@ class Publicacion(models.Model):
             current_year = datetime.now().year
             current_month = datetime.now().month
             while True:
-                codigo_generado = f"P-{current_year}-{current_month.zfill(2)}-{uuid.uuid4().hex[:8].upper()}"
+                codigo_generado = f"P-{str(current_year)}-{str(current_month).zfill(2)}-{uuid.uuid4().hex[:8].upper()}"
                 if not Publicacion.objects.filter(codigo=codigo_generado).exists():
                     self.codigo = codigo_generado
                     break
