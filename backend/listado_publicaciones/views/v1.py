@@ -345,6 +345,20 @@ class EvidenciasViewSet(viewsets.ModelViewSet):
             permission_classes = [IsAdmin]
         return [permission() for permission in permission_classes]
 
+    def create(self, request, *args, **kwargs):
+        data = request.data.copy()
+
+        # Validar que `publicacion_id` sea un número
+        if isinstance(data.get('publicacion_id'), Publicacion):
+            data['publicacion_id'] = data['publicacion_id'].id
+        
+        # Pasar los datos al serializador
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
 
 class ImagenesAnunciosViewSet(viewsets.ModelViewSet):
     queryset = ImagenAnuncio.objects.all()
