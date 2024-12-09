@@ -99,7 +99,7 @@ class Publicacion(models.Model):
     junta_vecinal = models.ForeignKey(JuntaVecinal, on_delete=models.RESTRICT)
     categoria = models.ForeignKey(Categoria, on_delete=models.RESTRICT)
     situacion = models.ForeignKey(
-        SituacionPublicacion, on_delete=models.RESTRICT, null=True, blank=True
+        SituacionPublicacion, on_delete=models.RESTRICT, null=True, blank=True,Default=4,
     )
     departamento = models.ForeignKey(DepartamentoMunicipal, on_delete=models.RESTRICT)
     descripcion = models.TextField()
