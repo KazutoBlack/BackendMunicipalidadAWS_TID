@@ -122,17 +122,17 @@ class EvidenciaSerializer(serializers.ModelSerializer):
         ]
     def create(self, validated_data):
     # Validar y procesar publicacion_id
-    publicacion = validated_data.get("publicacion_id")
-    if isinstance(publicacion, Publicacion):
-        validated_data["publicacion_id"] = publicacion.id  # Convertir a ID si es un objeto
+        publicacion = validated_data.get("publicacion_id")
+        if isinstance(publicacion, Publicacion):
+            validated_data["publicacion_id"] = publicacion.id  # Convertir a ID si es un objeto
     # Procesar el archivo con Cloudinary
-    archivo = validated_data.pop("archivo")
-    upload_data = cloudinary.uploader.upload(archivo)
-    url_completa = upload_data["url"]
-    ruta_relativa = url_completa.split("de06451wd/")[1]
-    validated_data["archivo"] = ruta_relativa
-    # Crear y devolver la instancia de Evidencia
-    return Evidencia.objects.create(**validated_data)
+        archivo = validated_data.pop("archivo")
+        upload_data = cloudinary.uploader.upload(archivo)
+        url_completa = upload_data["url"]
+        ruta_relativa = url_completa.split("de06451wd/")[1]
+        validated_data["archivo"] = ruta_relativa
+        # Crear y devolver la instancia de Evidencia
+        return Evidencia.objects.create(**validated_data)
 
 
 # Serializer para Publicacion
